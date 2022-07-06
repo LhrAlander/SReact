@@ -3,5 +3,6 @@
   "version": "1.0.0",
   "main": "index.ts",
   "author": "AlanderLt@163.com",
-  "license": "MIT"
+  "license": "MIT",
+  "type": "module"
 }

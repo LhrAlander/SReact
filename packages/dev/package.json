@@ -6,6 +6,7 @@
   "author": "AlanderLt@163.com",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "dependencies": {
     "react": "1.0.0",
     "react-reconciler": "1.0.0"
