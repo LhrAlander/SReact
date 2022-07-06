@@ -1,0 +1,13 @@
+{
+  "name": "dev",
+  "version": "1.0.0",
+  "description": "only for dev",
+  "main": "index.ts",
+  "author": "AlanderLt@163.com",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "1.0.0",
+    "react-reconciler": "1.0.0"
+  }
+}
