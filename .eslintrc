@@ -1,14 +1,16 @@
 {
+  "parser": "@typescript-eslint/parser",
   "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
   "plugins": [
+    "@typescript-eslint",
     "prettier"
   ],
   "parserOptions": {
-    "project": "./tsconfig.json",
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+    "project": "./tsconfig.json"
   },
   "rules": {
     "prettier/prettier": "error",

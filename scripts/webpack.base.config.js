@@ -23,6 +23,9 @@ const config = {
         }
       },
     ]
+  },
+  resolve: {
+    extensions: ['.jsx', '.ts', '.tsx', '...'],
   }
 }
 
