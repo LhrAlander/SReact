@@ -1,0 +1,8 @@
+{
+  "name": "scheduler",
+  "version": "1.0.0",
+  "description": "job scheduler",
+  "main": "index.ts",
+  "author": "AlanderLt@163.com",
+  "license": "MIT"
+}
