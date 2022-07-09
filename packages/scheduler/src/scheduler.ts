@@ -74,7 +74,7 @@ class Scheduler {
 	}
 
 	scheduleJob(job: IJob, options: IScheduleOption): IScheduledTask {
-		const currentTime = performance.now();
+		const currentTime = this.getCurrentTime();
 
 		let startTime: number = currentTime;
 		if (typeof options.delay === 'number' && options.delay > 0) {
@@ -147,6 +147,10 @@ class Scheduler {
 		return this.currentPriority;
 	}
 
+	getCurrentTime() {
+		return performance.now();
+	}
+
 	private cancelHostTimeout() {
 		clearTimeout(this.taskTimeoutId);
 		this.taskTimeoutId = -1;
@@ -198,7 +202,7 @@ class Scheduler {
 				currentTask.job = null;
 				const didCallbackTimeout = currentTask.expirationTime <= currentTime;
 				const continuationCallback = fn(didCallbackTimeout);
-				currentTime = performance.now();
+				currentTime = this.getCurrentTime();
 				if (typeof continuationCallback === 'function') {
 					currentTask.job = continuationCallback;
 				} else {
@@ -228,7 +232,7 @@ class Scheduler {
 
 	shouldYieldForFrame() {
 		const frameInterval = 5;
-		return performance.now() - this.performWorkStartTime > frameInterval;
+		return this.getCurrentTime() - this.performWorkStartTime > frameInterval;
 	}
 
 	private performWorkUntilDeadline() {
@@ -236,7 +240,7 @@ class Scheduler {
 			return;
 		}
 
-		const currentTime = performance.now();
+		const currentTime = this.getCurrentTime();
 
 		this.performWorkStartTime = currentTime;
 

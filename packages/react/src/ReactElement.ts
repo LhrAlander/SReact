@@ -6,7 +6,7 @@ export interface FunctionalComponent<P = any> {
 
 const RESERVED_PROPS = new Set(['key']);
 
-class ReactElement<P = any> {
+export class ReactElement<P = any> {
 	$$typeof: ReactSymbol;
 	type: string | FunctionalComponent<P>;
 	props: P & { children?: ReactElement | ReactElement[] };
@@ -51,3 +51,5 @@ export function createElement<P extends object = Record<string, unknown>>(
 
 	return new ReactElement(type, key, props as P);
 }
+
+export type ReactNodeList = ReactElement;

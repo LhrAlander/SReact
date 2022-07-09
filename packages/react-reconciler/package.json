@@ -4,5 +4,13 @@
   "main": "index.ts",
   "author": "AlanderLt@163.com",
   "license": "MIT",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "react": "1.0.0",
+    "react-dom": "1.0.0",
+    "scheduler": "1.0.0"
+  },
+  "devDependencies": {
+    "react": "1.0.0"
+  }
 }
