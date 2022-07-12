@@ -1,8 +1,11 @@
 import {
 	DefaultLane,
+	getHighestPriorityLane,
 	IdleLane,
+	includesNonIdleWork,
 	InputContinuousLane,
 	Lane,
+	Lanes,
 	NoLane,
 	SyncLane
 } from './reactFiberLane';
@@ -11,7 +14,7 @@ export type TEventPriority = Lane;
 
 export enum EEventPriority {
 	DISCRETE = SyncLane,
-	INPUT_CONTINUOUS = InputContinuousLane,
+	CONTINUOUS = InputContinuousLane,
 	DEFAULT = DefaultLane,
 	IDLE = IdleLane
 }
@@ -24,4 +27,25 @@ export function getCurrentUpdatePriority(): TEventPriority {
 
 export function setCurrentUpdatePriority(priority: EEventPriority) {
 	currentUpdatePriority = priority;
+}
+
+export function isHigherEventPriority(a: EEventPriority, b: EEventPriority) {
+	return a < b;
+}
+
+export function lanesToEventPriority(lanes: Lanes): EEventPriority {
+	const lane = getHighestPriorityLane(lanes);
+	if (isHigherEventPriority(lane, EEventPriority.DISCRETE)) {
+		return EEventPriority.DISCRETE;
+	}
+
+	if (isHigherEventPriority(lane, EEventPriority.CONTINUOUS)) {
+		return EEventPriority.CONTINUOUS;
+	}
+
+	if (includesNonIdleWork(lanes)) {
+		return EEventPriority.DEFAULT;
+	}
+
+	return EEventPriority.IDLE;
 }
