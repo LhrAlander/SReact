@@ -135,3 +135,12 @@ export function getHighestPriorityLane(lanes: Lanes): Lane {
 export function includesNonIdleWork(lanes: Lanes) {
 	return (lanes & NonIdleLanes) !== NoLane;
 }
+
+export function includesBlockingLane(lanes: Lanes) {
+	const syncDefaultLanes = InputContinuousLane | DefaultLane;
+	return (lanes & syncDefaultLanes) !== NoLane;
+}
+
+export function includesExpiredLane(root: FiberRootNode, lanes: Lanes) {
+	return (lanes & root.expiredLanes) !== NoLane;
+}

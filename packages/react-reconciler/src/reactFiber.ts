@@ -1,5 +1,5 @@
 import { WorkTag } from './reactWorkTag';
-import { Flags, NoFlags } from './reactFiberFlags';
+import { Flags, NoFlags, StaticMask } from './reactFiberFlags';
 import { Lanes, NoLane } from './reactFiberLane';
 import { RootTag } from '../index';
 import { IUpdateQueue } from './reactFiberUpdateQueue';
@@ -76,4 +76,42 @@ export function createHostRootFiber(tag: RootTag) {
 	const mode =
 		tag === RootTag.CONCURRENT ? FiberNodeMode.CONCURRENT : FiberNodeMode.NO;
 	return new Fiber(WorkTag.HOST_ROOT, null, null, mode);
+}
+
+export function createWorkInProgress(
+	current: Fiber,
+	pendingProps: unknown
+): Fiber {
+	let workInProgress = current.alternate;
+	if (workInProgress === null) {
+		workInProgress = new Fiber(
+			current.tag,
+			pendingProps,
+			current.key,
+			current.mode
+		);
+
+		workInProgress.elementType = current.elementType;
+		workInProgress.type = current.type;
+		workInProgress.stateNode = current.stateNode;
+		workInProgress.alternate = current;
+		current.alternate = workInProgress;
+	} else {
+		workInProgress.pendingProps = pendingProps;
+		workInProgress.type = current.type;
+		workInProgress.flags = NoFlags;
+	}
+
+	workInProgress.flags = current.flags & StaticMask;
+	workInProgress.childLanes = current.childLanes;
+	workInProgress.lanes = current.lanes;
+
+	workInProgress.child = current.child;
+	workInProgress.memoizedProps = current.memoizedProps;
+	workInProgress.memoizedState = current.memoizedState;
+	workInProgress.updateQueue = current.updateQueue;
+
+	workInProgress.sibling = current.sibling;
+	workInProgress.index = current.index;
+	return workInProgress;
 }
