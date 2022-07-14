@@ -144,3 +144,7 @@ export function includesBlockingLane(lanes: Lanes) {
 export function includesExpiredLane(root: FiberRootNode, lanes: Lanes) {
 	return (lanes & root.expiredLanes) !== NoLane;
 }
+
+export function includesSomeLane(a: Lanes | Lane, b: Lanes | Lane) {
+	return (a & b) !== NoLane;
+}
